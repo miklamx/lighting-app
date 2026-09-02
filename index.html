@@ -3,85 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-Family Exterior Lighting & Rebate Audit Tool</title>
+    <title>MULTI-FAMILY LIGHTING | HIGH-PERFORMANCE SPECIFIER</title>
+    <!-- Importing an aggressive, condensed font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent-color: #38bdf8;
-            --accent-green: #4ade80;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: #334155;
+            /* NASCAR Inspired Palette */
+            --bg-asphalt: #050505; /* Deep Black */
+            --bg-cockpit: #111111; /* Slightly Lighter Carbon/Grey */
+            --velocity-yellow: #FFD700; /* Main Interactive Accent */
+            --caution-red: #FF0000; /* Warnings / Urgent Data */
+            --green-flag: #00FF00; /* Savings / Confirmations */
+            --text-main: #FFFFFF;
+            --text-muted: #A0A0A0;
+            --border-hard: #333333; /* Dark, angled borders */
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
+            font-family: 'Oswald', sans-serif; /* Powerful, all-caps default */
+            text-transform: uppercase; /* Force high-energy typography */
+            letter-spacing: 1px;
+            background-color: var(--bg-asphalt);
+            /* Subtle Carbon Fiber Pattern Overlay */
+            background-image: 
+                linear-gradient(45deg, rgba(20,20,20,0.5) 25%, transparent 25%), 
+                linear-gradient(-45deg, rgba(20,20,20,0.5) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(20,20,20,0.5) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(20,20,20,0.5) 75%);
+            background-size: 10px 10px;
             color: var(--text-main);
             margin: 0;
-            padding: 24px;
+            padding: 15px;
         }
 
         header {
-            margin-bottom: 24px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 4px solid var(--velocity-yellow); /* Thick racing stripe */
+            padding-bottom: 10px;
         }
 
         h1 {
-            margin: 0 0 6px 0;
-            font-size: 1.6rem;
-            color: var(--accent-color);
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--text-main);
+            font-weight: 700;
         }
 
-        p {
-            margin: 0;
+        .perf-status {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--velocity-yellow);
+        }
+
+        .sub-header {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            margin-top: -10px;
+            margin-bottom: 20px;
+            font-family: 'Roboto Mono', monospace;
+            text-transform: none; /* Lower case allowed here for readability */
         }
 
         .main-container {
             display: grid;
-            grid-template-columns: 360px 1fr;
-            gap: 24px;
+            grid-template-columns: 380px 1fr;
+            gap: 15px;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 1000px) {
             .main-container {
                 grid-template-columns: 1fr;
             }
         }
 
         .panel {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
+            background-color: var(--bg-cockpit);
+            border: 2px solid var(--border-hard);
+            border-radius: 0; /* Hard edges, no rounding */
+            padding: 15px;
+            position: relative;
+        }
+
+        /* Angled corner visual effect on panels */
+        .panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-style: solid;
+            border-width: 0 15px 15px 0;
+            border-color: transparent var(--border-hard) transparent transparent;
         }
 
         .site-map-container {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            border: 2px solid var(--velocity-yellow);
+            padding: 5px;
         }
 
         .site-map-svg {
             width: 100%;
             height: auto;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            background-color: #0b1329;
+            background-color: #000000;
         }
 
         .map-zone {
             cursor: pointer;
-            fill-opacity: 0.25;
+            fill-opacity: 0.1;
             stroke-width: 2;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease-out;
         }
 
         .map-zone:hover, .map-zone.active {
-            fill-opacity: 0.65;
-            stroke-width: 3;
+            fill-opacity: 0.9; /* High contrast select */
+            stroke-width: 4;
+            stroke: #FFFFFF;
         }
 
         .zone-list {
@@ -91,157 +130,192 @@
         }
 
         .zone-item {
-            padding: 12px;
-            border-radius: 6px;
+            padding: 10px;
             cursor: pointer;
-            margin-bottom: 8px;
-            background-color: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border-color);
+            margin-bottom: 5px;
+            background-color: #000000;
+            border: 1px solid var(--border-hard);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: border-color 0.1s ease-out;
         }
 
         .zone-item:hover {
-            border-color: var(--accent-color);
-            background-color: rgba(56, 189, 248, 0.05);
+            border-color: var(--velocity-yellow);
         }
 
         .zone-item.active {
-            border-color: var(--accent-color);
-            background-color: rgba(56, 189, 248, 0.15);
-            font-weight: 600;
+            border: 2px solid var(--velocity-yellow);
+            background-color: rgba(255, 215, 0, 0.1);
+        }
+
+        .zone-title {
+            font-size: 1.1rem;
+            font-weight: 700;
         }
 
         .badge {
+            font-family: 'Roboto Mono', monospace;
             font-size: 0.75rem;
-            padding: 2px 8px;
-            border-radius: 12px;
-            background-color: var(--border-color);
-            color: var(--text-main);
+            padding: 2px 6px;
+            background-color: var(--border-hard);
+            color: var(--text-muted);
         }
 
+        .zone-item.active .badge {
+            background-color: var(--velocity-yellow);
+            color: #000000;
+        }
+
+        /* Detail Card Grid: High Data Density */
         .spec-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin: 20px 0;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 15px 0;
         }
 
         .spec-box {
-            background-color: rgba(0, 0, 0, 0.25);
-            padding: 14px;
-            border-radius: 6px;
-            border-left: 3px solid var(--accent-color);
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border: 1px solid var(--border-hard);
+            border-left: 4px solid var(--border-hard); /* Default neutral */
         }
 
-        .spec-box.rebate {
-            border-left-color: var(--accent-green);
-        }
+        /* Specific border colors per data type */
+        .spec-box.light-level { border-left-color: #FFFFFF; }
+        .spec-box.optic { border-left-color: var(--velocity-yellow); }
+        .spec-box.control { border-left-color: var(--caution-red); }
+        .spec-box.dlc { border-left-color: var(--green-flag); }
 
         .spec-box label {
             display: block;
-            font-size: 0.75rem;
-            text-transform: uppercase;
+            font-size: 0.7rem;
             color: var(--text-muted);
-            margin-bottom: 4px;
+            margin-bottom: 2px;
+            font-family: 'Roboto Mono', monospace;
         }
 
         .spec-box span {
-            font-size: 0.95rem;
-            font-weight: 600;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
         }
 
+        /* Calculator Panel - High Performance Section */
         .calculator-panel {
-            background-color: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 16px;
-            margin-top: 20px;
+            border: 2px solid var(--green-flag); /* "GO" color */
+            padding: 15px;
+            margin-top: 15px;
+            background-color: #000000;
         }
 
         .calculator-panel h3 {
             margin-top: 0;
-            font-size: 1rem;
-            color: var(--accent-green);
+            font-size: 1.2rem;
+            color: var(--green-flag);
+            margin-bottom: 10px;
         }
 
         .calc-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
         }
 
-        .form-group {
-            margin-top: 14px;
+        @media (max-width: 600px) {
+            .calc-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 6px;
-            font-size: 0.85rem;
+            margin-bottom: 4px;
+            font-size: 0.75rem;
             color: var(--text-muted);
+            font-family: 'Roboto Mono', monospace;
         }
 
-        .form-group input, .form-group textarea, .form-group select {
+        .form-group input, .form-group textarea {
             width: 100%;
-            padding: 10px;
-            background-color: #0f172a;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
+            padding: 8px;
+            background-color: #111111;
+            border: 1px solid var(--border-hard);
             color: var(--text-main);
+            font-family: 'Roboto Mono', monospace; /* Monospace input data */
+            font-size: 1rem;
             box-sizing: border-box;
+            border-radius: 0;
         }
 
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--velocity-yellow);
+        }
+
+        /* ROI Digital Display Look */
         .roi-summary {
-            margin-top: 16px;
-            padding: 12px;
-            background-color: rgba(74, 222, 128, 0.1);
-            border: 1px solid var(--accent-green);
-            border-radius: 6px;
-            display: flex;
-            justify-content: space-around;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #000000;
+            border: 2px solid var(--green-flag);
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             text-align: center;
         }
 
-        .roi-summary div label {
+        .roi-stat label {
             display: block;
             font-size: 0.7rem;
             color: var(--text-muted);
-            text-transform: uppercase;
+            font-family: 'Roboto Mono', monospace;
         }
 
-        .roi-summary div span {
-            font-size: 1.1rem;
+        .roi-stat span {
+            font-size: 1.6rem;
             font-weight: bold;
-            color: var(--accent-green);
+            color: var(--green-flag);
+            font-family: 'Roboto Mono', monospace; /* Digital meter style */
         }
 
+        /* Large Notes Area */
+        .notes-area {
+            margin-top: 15px;
+        }
+
+        /* High-Speed Call to Action Button */
         .btn-action {
-            background-color: var(--accent-color);
-            color: #0f172a;
+            background-color: var(--velocity-yellow);
+            color: #000000;
             border: none;
-            padding: 12px 20px;
-            border-radius: 6px;
-            font-weight: 600;
+            padding: 15px 20px;
+            font-weight: 700;
+            font-size: 1.2rem;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 15px;
             width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            transition: background-color 0.1s ease;
         }
 
+        /* "Caution Flag" pattern overlay on button hover */
         .btn-action:hover {
-            opacity: 0.9;
+            background-color: #FFFFFF;
+            background-image: linear-gradient(45deg, #000 25%, transparent 25%, transparent 50%, #000 50%, #000 75%, transparent 75%, transparent);
+            background-size: 20px 20px;
+            color: var(--velocity-yellow);
         }
 
         .output-box {
-            margin-top: 20px;
-            background-color: #080d1a;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 12px;
-            font-family: monospace;
+            margin-top: 15px;
+            background-color: #000000;
+            border: 1px solid var(--border-hard);
+            padding: 10px;
+            font-family: 'Roboto Mono', monospace;
             font-size: 0.8rem;
-            color: var(--accent-color);
+            color: var(--velocity-yellow);
             white-space: pre-wrap;
             display: none;
         }
@@ -250,100 +324,54 @@
 <body>
 
 <header>
-    <h1>Multi-Family Lighting Layout & Rebate Audit Tool</h1>
-    <p>Select site segments via map or list to configure fixture specs, estimate energy reduction, and generate factory transmittals.</p>
+    <h1>LIGHTING DATA | RACE-READY SPECIFIER</h1>
+    <div class="perf-status">STATUS: OPTIMAL [v2. NASCAR]</div>
 </header>
+<div class="sub-header">Field audit tool for multi-family exterior lighting retrofits. Select zone to configure.</div>
 
 <div class="main-container">
     <div class="panel">
         <div class="site-map-container">
+            <!-- Interative Site Blueprint -->
             <svg class="site-map-svg" viewBox="0 0 400 260">
-                <rect id="svg-parking" class="map-zone" x="20" y="20" width="220" height="110" fill="#38bdf8" stroke="#38bdf8" onclick="selectZoneById('parking')"/>
-                <text x="130" y="75" fill="#ffffff" font-size="12" text-anchor="middle" pointer-events="none">Main Parking Lot</text>
+                <!-- Main Parking (Velocity Yellow) -->
+                <rect id="svg-parking" class="map-zone" x="20" y="20" width="220" height="110" fill="#FFD700" stroke="#FFD700" onclick="selectZoneById('parking')"/>
+                <text x="130" y="75" fill="#FFFFFF" font-size="14" font-weight="700" text-anchor="middle" pointer-events="none">PARKING</text>
                 
-                <rect id="svg-perimeter-parking" class="map-zone" x="250" y="20" width="130" height="110" fill="#f59e0b" stroke="#f59e0b" onclick="selectZoneById('perimeter-parking')"/>
-                <text x="315" y="75" fill="#ffffff" font-size="11" text-anchor="middle" pointer-events="none">Perimeter Line</text>
+                <!-- Perimeter Line (Caution Red) -->
+                <rect id="svg-perimeter-parking" class="map-zone" x="250" y="20" width="130" height="110" fill="#FF0000" stroke="#FF0000" onclick="selectZoneById('perimeter-parking')"/>
+                <text x="315" y="75" fill="#FFFFFF" font-size="12" font-weight="700" text-anchor="middle" pointer-events="none">PERIMETER</text>
 
-                <rect id="svg-breezeways" class="map-zone" x="20" y="140" width="160" height="100" fill="#a855f7" stroke="#a855f7" onclick="selectZoneById('breezeways')"/>
-                <text x="100" y="195" fill="#ffffff" font-size="12" text-anchor="middle" pointer-events="none">Breezeways / Units</text>
+                <!-- Breezeways (Pure White) -->
+                <rect id="svg-breezeways" class="map-zone" x="20" y="140" width="160" height="100" fill="#FFFFFF" stroke="#FFFFFF" onclick="selectZoneById('breezeways')"/>
+                <text x="100" y="195" fill="#FFFFFF" font-size="14" font-weight="700" text-anchor="middle" pointer-events="none">UNITS / WALK</text>
 
-                <rect id="svg-stairwells" class="map-zone" x="190" y="140" width="80" height="100" fill="#ef4444" stroke="#ef4444" onclick="selectZoneById('stairwells')"/>
-                <text x="230" y="195" fill="#ffffff" font-size="11" text-anchor="middle" pointer-events="none">Stairwells</text>
+                <!-- Stairwells (High Intensity Blue) -->
+                <rect id="svg-stairwells" class="map-zone" x="190" y="140" width="80" height="100" fill="#0000FF" stroke="#0000FF" onclick="selectZoneById('stairwells')"/>
+                <text x="230" y="195" fill="#FFFFFF" font-size="12" font-weight="700" text-anchor="middle" pointer-events="none">STAIRS</text>
 
-                <rect id="svg-perimeter-bldg" class="map-zone" x="280" y="140" width="100" height="100" fill="#10b981" stroke="#10b981" onclick="selectZoneById('perimeter-bldg')"/>
-                <text x="330" y="195" fill="#ffffff" font-size="11" text-anchor="middle" pointer-events="none">Building Wall</text>
+                <!-- Building Wall (Green Flag) -->
+                <rect id="svg-perimeter-bldg" class="map-zone" x="280" y="140" width="100" height="100" fill="#00FF00" stroke="#00FF00" onclick="selectZoneById('perimeter-bldg')"/>
+                <text x="330" y="195" fill="#FFFFFF" font-size="12" font-weight="700" text-anchor="middle" pointer-events="none">WALL PACKS</text>
             </svg>
         </div>
 
         <ul class="zone-list" id="zoneList"></ul>
     </div>
 
+    <!-- Active Zone Telemetry Display -->
     <div class="panel" id="detailCard">
-        </div>
+        <!-- Content populated via JS -->
+    </div>
 </div>
 
 <script>
     const zoneData = [
-        {
-            id: "parking",
-            title: "Parking Bays & Access Lanes",
-            fc: "1.0 - 2.0 fc avg",
-            optics: "Type III / Type V",
-            controls: "Bi-level dimming (50%) + Photocell",
-            fixtures: "LED Area/Shoebox Lights (Pole-Mounted)",
-            dlcTier: "DLC Premium V5.1",
-            baseWattage: 250,
-            ledWattage: 75,
-            estRebatePerFixture: 75
-        },
-        {
-            id: "perimeter-parking",
-            title: "Perimeter Parking",
-            fc: "1.0 - 1.5 fc avg",
-            optics: "Type IV (Forward Throw)",
-            controls: "Bi-level dimming + Photocell",
-            fixtures: "Full-Cutoff Area Lights w/ Backlight Shield",
-            dlcTier: "DLC Premium V5.1",
-            baseWattage: 250,
-            ledWattage: 80,
-            estRebatePerFixture: 75
-        },
-        {
-            id: "breezeways",
-            title: "Breezeways & Corridors",
-            fc: "3.0 - 5.0 fc avg",
-            optics: "Wide Surface Mount",
-            controls: "Bi-Level Motion Sensing + Photocell",
-            fixtures: "Flush-Mount Ceiling Puck / Square Canopies",
-            dlcTier: "DLC Standard V5.1",
-            baseWattage: 70,
-            ledWattage: 20,
-            estRebatePerFixture: 25
-        },
-        {
-            id: "stairwells",
-            title: "Stairwells & Emergency Egress",
-            fc: "5.0 - 10.0 fc min",
-            optics: "Wide Symmetric",
-            controls: "Continuous 24/7 + EM Battery Backup",
-            fixtures: "Vandal-Resistant Surface Wall Packs",
-            dlcTier: "DLC Standard V5.1",
-            baseWattage: 100,
-            ledWattage: 30,
-            estRebatePerFixture: 35
-        },
-        {
-            id: "perimeter-bldg",
-            title: "Building Perimeter Wall Packs",
-            fc: "1.5 - 3.0 fc avg",
-            optics: "Type III / Forward Throw",
-            controls: "Integrated PIR Motion Sensor (dims to 30%)",
-            fixtures: "Full-Cutoff Architectural LED Wall Packs",
-            dlcTier: "DLC Premium V5.1",
-            baseWattage: 175,
-            ledWattage: 45,
-            estRebatePerFixture: 50
-        }
+        { id: "parking", title: "MAIN PARKING LOT", fc: "1.0 - 2.0 FC AVG", optics: "TYPE III / TYPE V", controls: "BI-LEVEL DIM (50%) + PC", fixtures: "POLE-MOUNT AREA LIGHTS", dlcTier: "DLC PREMIUM V5.1", baseWattage: 250, ledWattage: 75, estRebatePerFixture: 75 },
+        { id: "perimeter-parking", title: "PERIMETER LINE", fc: "1.0 - 1.5 FC AVG", optics: "TYPE IV FWD THROW", controls: "BI-LEVEL DIM + PC", fixtures: "FULL-CUTOFF W/ SHIELDS", dlcTier: "DLC PREMIUM V5.1", baseWattage: 250, ledWattage: 80, estRebatePerFixture: 75 },
+        { id: "breezeways", title: "BREEZEWAYS / WALK", fc: "3.0 - 5.0 FC AVG", optics: "WIDE SURFACE", controls: "BI-LEVEL MOTION + PC", fixtures: "CEILING PUCK / CANOPY", dlcTier: "DLC STANDARD V5.1", baseWattage: 70, ledWattage: 20, estRebatePerFixture: 25 },
+        { id: "stairwells", title: "STAIRWELL EGRESS", fc: "5.0 - 10.0 FC MIN", optics: "WIDE SYMMETRIC", controls: "24/7 + EM BACKUP", fixtures: "VANDAL-RESISTANT WALL", dlcTier: "DLC STANDARD V5.1", baseWattage: 100, ledWattage: 30, estRebatePerFixture: 35 },
+        { id: "perimeter-bldg", title: "BUILDING WALL PACKS", fc: "1.5 - 3.0 FC AVG", optics: "TYPE III / FWD THROW", controls: "INTEGRATED MOTION (30%)", fixtures: "FULL-CUTOFF ARCH LED", dlcTier: "DLC PREMIUM V5.1", baseWattage: 175, ledWattage: 45, estRebatePerFixture: 50 }
     ];
 
     let currentZone = zoneData[0];
@@ -351,7 +379,7 @@
 
     function init() {
         zoneData.forEach(z => {
-            auditData[z.id] = { qty: 0, notes: "", photoCount: 0 };
+            auditData[z.id] = { qty: 0, notes: "" };
         });
         renderZoneList();
         renderDetailCard();
@@ -374,13 +402,13 @@
             li.className = `zone-item ${zone.id === currentZone.id ? 'active' : ''}`;
             const qty = auditData[zone.id].qty;
             li.innerHTML = `
-                <span>${zone.title}</span>
-                <span class="badge">${qty > 0 ? qty + ' units' : 'Pending'}</span>
+                <span class="zone-title">${zone.title}</span>
+                <span class="badge">${qty > 0 ? qty + ' UNITS' : 'PENDING'}</span>
             `;
             li.onclick = () => selectZoneById(zone.id);
             listEl.appendChild(li);
 
-            // Update SVG highlighted states
+            // Update SVG map visual states
             const svgEl = document.getElementById(`svg-${zone.id}`);
             if (svgEl) {
                 if (zone.id === currentZone.id) {
@@ -397,65 +425,66 @@
         const currentAudit = auditData[currentZone.id];
 
         cardEl.innerHTML = `
-            <h2>${currentZone.title}</h2>
+            <h2>TELEMETRY: ${currentZone.title}</h2>
+            
             <div class="spec-grid">
-                <div class="spec-box">
-                    <label>Target Foot-Candles</label>
+                <div class="spec-box light-level">
+                    <label>TARGET LIGHT LEVEL</label>
                     <span>${currentZone.fc}</span>
                 </div>
-                <div class="spec-box">
-                    <label>Optic Distribution</label>
+                <div class="spec-box optic">
+                    <label>OPTIC DISTRIBUTION</label>
                     <span>${currentZone.optics}</span>
                 </div>
-                <div class="spec-box">
-                    <label>Mandatory Controls</label>
+                <div class="spec-box control">
+                    <label>MANDATORY CONTROLS</label>
                     <span>${currentZone.controls}</span>
                 </div>
-                <div class="spec-box rebate">
-                    <label>Rebate Eligibility</label>
+                <div class="spec-box dlc">
+                    <label>REBATE ELIGIBILITY</label>
                     <span>${currentZone.dlcTier}</span>
                 </div>
             </div>
 
             <div class="calculator-panel">
-                <h3>Energy Reduction & Utility Rebate Calculator</h3>
+                <h3>PERFORMANCE CALCULATOR [ENERGY + INCENTIVE]</h3>
                 <div class="calc-grid">
                     <div class="form-group">
-                        <label>Fixture Qty</label>
+                        <label>FIXTURE QTY</label>
                         <input type="number" id="inputQty" value="${currentAudit.qty}" min="0" oninput="updateCalculations()"/>
                     </div>
                     <div class="form-group">
-                        <label>Baseline Wattage</label>
+                        <label>BASELINE (W)</label>
                         <input type="number" id="inputBaseW" value="${currentZone.baseWattage}" oninput="updateCalculations()"/>
                     </div>
                     <div class="form-group">
-                        <label>LED Wattage</label>
+                        <label>LED (W)</label>
                         <input type="number" id="inputLedW" value="${currentZone.ledWattage}" oninput="updateCalculations()"/>
                     </div>
                     <div class="form-group">
-                        <label>Est. Rebate/Unit ($)</label>
+                        <label>REBATE/UNIT ($)</label>
                         <input type="number" id="inputRebate" value="${currentZone.estRebatePerFixture}" oninput="updateCalculations()"/>
                     </div>
                 </div>
 
                 <div class="roi-summary">
-                    <div>
-                        <label>Total Power Reduction</label>
-                        <span id="summaryKw">0.0 kW</span>
+                    <div class="roi-stat">
+                        <label>POWER REDUCTION</label>
+                        <span id="summaryKw">0.0 KW</span>
                     </div>
-                    <div>
-                        <label>Est. Utility Incentive</label>
+                    <div class="roi-stat">
+                        <label>EST. INCENTIVE</label>
                         <span id="summaryRebate">$0</span>
                     </div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label>Field Notes & Mounting Verification</label>
-                <textarea id="fieldNotes" rows="3" placeholder="Document pole heights, tenon dimensions, existing damage, or mounting surface..." onchange="saveNotes()">${currentAudit.notes}</textarea>
+            <div class="form-group notes-area">
+                <label>FIELD NOTES | POLE CONFIG | MOUNTING VERIFICATION</label>
+                <textarea id="fieldNotes" rows="3" placeholder="Enter critical site data (e.g., 20ft poles, 2-3/8 tenon, brick mount...)" onchange="saveNotes()">${currentAudit.notes}</textarea>
             </div>
 
-            <button class="btn-action" onclick="generateTransmittal()">Export Factory Spec Transmittal Package</button>
+            <button class="btn-action" onclick="generateTransmittal()">EXPORT FACTORY SPEC PACKAGE</button>
             <div id="outputBox" class="output-box"></div>
         `;
 
@@ -468,13 +497,14 @@
         const ledW = parseFloat(document.getElementById("inputLedW").value) || 0;
         const rebatePerUnit = parseFloat(document.getElementById("inputRebate").value) || 0;
 
-        // Store back to state
+        // Store back to active state
         auditData[currentZone.id].qty = qty;
 
         const totalKwSaved = ((baseW - ledW) * qty) / 1000;
         const totalRebate = qty * rebatePerUnit;
 
-        document.getElementById("summaryKw").innerText = `${totalKwSaved.toFixed(2)} kW`;
+        // Update the digital meters
+        document.getElementById("summaryKw").innerText = `${totalKwSaved.toFixed(1)} KW`;
         document.getElementById("summaryRebate").innerText = `$${totalRebate.toLocaleString()}`;
 
         renderZoneList();
@@ -487,18 +517,25 @@
 
     function generateTransmittal() {
         saveNotes();
+        const activeZones = zoneData.map(z => ({
+            segment: z.title,
+            targetFC: z.fc,
+            distribution: z.optics,
+            mandatoryControls: z.controls,
+            dlcRequirement: z.dlcTier,
+            quantity: auditData[z.id].qty,
+            fieldNotes: auditData[z.id].notes
+        })).filter(z => z.quantity > 0);
+
+        if (activeZones.length === 0) {
+            alert("NO DATA: ENTER QUANTITIES FOR AT LEAST ONE ZONE.");
+            return;
+        }
+
         const payload = {
-            project: "Multi-Family Exterior Lighting Specification Package",
+            project: "MULTI-FAMILY EXTERIOR | FACTORY RFQ PACKAGE",
             generatedAt: new Date().toISOString(),
-            zones: zoneData.map(z => ({
-                segment: z.title,
-                targetFC: z.fc,
-                distribution: z.optics,
-                mandatoryControls: z.controls,
-                dlcRequirement: z.dlcTier,
-                quantity: auditData[z.id].qty,
-                fieldNotes: auditData[z.id].notes
-            })).filter(z => z.quantity > 0)
+            zones: activeZones
         };
 
         const outputEl = document.getElementById("outputBox");
@@ -506,7 +543,7 @@
         outputEl.innerText = JSON.stringify(payload, null, 2);
     }
 
-    // Initialize application
+    // Start App
     init();
 </script>
 
