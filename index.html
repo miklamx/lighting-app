@@ -1,28 +1,3 @@
-Integrating visual diagrams for photometric optics and control functions makes the telemetry panel far more intuitive for field auditors and clients.
-
-Below is a breakdown of how to structure those optical and control concepts visually, followed by the complete, updated single-file `index.html` application containing SVG diagrams embedded directly into the telemetry grid.
-
----
-
-### Photometric & Control Visual Specifications
-
-* **Target Light Level (Foot-Candles):** Represented by an illuminance meter showing target lux/fc intensity falling onto a surface plane.
-* **Optic Distribution (Type III / Type V):**
-* **Type III:** Asymmetric, forward-throw pattern reaching out laterally across driving lanes.
-* **Type IV:** Sharp forward-throw optical pattern designed to keep light within boundaries while blocking spill behind the fixture.
-* **Type V:** Symmetric $360^\circ$ circular or square throw for open parking bays and intersections.
-
-
-* **Bi-Level Dimming Controls:** Dual-state diagram showing full 100% output during occupancy drop-down to a 30%–50% standby baseline during inactive periods.
-* **DLC Utility Eligibility:** Certification badge graphic indicating energy code and rebate compliance verification.
-
----
-
-### Updated Application Code (`index.html`)
-
-You can replace the full contents of your `index.html` file on GitHub with this code to render the visual diagrams inside the telemetry cards:
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -792,5 +767,3 @@ You can replace the full contents of your `index.html` file on GitHub with this 
 
 </body>
 </html>
-
-```
