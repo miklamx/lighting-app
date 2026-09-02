@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MULTI-FAMILY LIGHTING | HIGH-PERFORMANCE SPECIFIER</title>
-    <!-- Importing aggressive fonts from Google Fonts -->
+    <title>MULTI-FAMILY LIGHTING | PROPERTY LIGHTING ASSESSMENT</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -49,12 +48,6 @@
             font-size: 1.8rem;
             color: var(--text-main);
             font-weight: 700;
-        }
-
-        .perf-status {
-            font-family: 'Roboto Mono', monospace;
-            font-size: 0.8rem;
-            color: var(--velocity-yellow);
         }
 
         .sub-header {
@@ -272,7 +265,6 @@
             font-family: 'Roboto Mono', monospace;
         }
 
-        /* Interactive Field Notes Styling */
         .notes-panel {
             margin-top: 15px;
             border: 1px solid var(--border-hard);
@@ -366,8 +358,7 @@
 <body>
 
 <header>
-    <h1>LIGHTING DATA | RACE-READY SPECIFIER</h1>
-    <div class="perf-status">STATUS: OPTIMAL [v2. NASCAR]</div>
+    <h1>PROPERTY LIGHTING ASSESSMENT</h1>
 </header>
 <div class="sub-header">Field audit tool for multi-family exterior lighting retrofits. Select zone to configure.</div>
 
@@ -396,8 +387,7 @@
     </div>
 
     <div class="panel" id="detailCard">
-        <!-- Content populated via JS -->
-    </div>
+        </div>
 </div>
 
 <script>
@@ -518,7 +508,6 @@
         const cardEl = document.getElementById("detailCard");
         const currentAudit = auditData[currentZone.id];
 
-        // Generate Quick Chips HTML
         const chipsHtml = currentZone.quickChips.map(chip => 
             `<button class="chip-btn" onclick="addChipNote('${chip}')">+ ${chip}</button>`
         ).join('');
@@ -604,7 +593,7 @@
         const textarea = document.getElementById("fieldNotes");
         let currentText = textarea.value.trim();
         
-        if (currentText.includes(text)) return; // Prevent duplicates
+        if (currentText.includes(text)) return;
         
         if (currentText.length > 0) {
             textarea.value = currentText + " | " + text;
