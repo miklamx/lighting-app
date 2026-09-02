@@ -4,27 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MULTI-FAMILY LIGHTING | HIGH-PERFORMANCE SPECIFIER</title>
-    <!-- Importing an aggressive, condensed font from Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <!-- Importing aggressive fonts from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             /* NASCAR Inspired Palette */
-            --bg-asphalt: #050505; /* Deep Black */
-            --bg-cockpit: #111111; /* Slightly Lighter Carbon/Grey */
-            --velocity-yellow: #FFD700; /* Main Interactive Accent */
-            --caution-red: #FF0000; /* Warnings / Urgent Data */
-            --green-flag: #00FF00; /* Savings / Confirmations */
+            --bg-asphalt: #050505;
+            --bg-cockpit: #111111;
+            --velocity-yellow: #FFD700;
+            --caution-red: #FF0000;
+            --green-flag: #00FF00;
             --text-main: #FFFFFF;
             --text-muted: #A0A0A0;
-            --border-hard: #333333; /* Dark, angled borders */
+            --border-hard: #333333;
         }
 
         body {
-            font-family: 'Oswald', sans-serif; /* Powerful, all-caps default */
-            text-transform: uppercase; /* Force high-energy typography */
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
             letter-spacing: 1px;
             background-color: var(--bg-asphalt);
-            /* Subtle Carbon Fiber Pattern Overlay */
             background-image: 
                 linear-gradient(45deg, rgba(20,20,20,0.5) 25%, transparent 25%), 
                 linear-gradient(-45deg, rgba(20,20,20,0.5) 25%, transparent 25%),
@@ -41,7 +40,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            border-bottom: 4px solid var(--velocity-yellow); /* Thick racing stripe */
+            border-bottom: 4px solid var(--velocity-yellow);
             padding-bottom: 10px;
         }
 
@@ -64,7 +63,7 @@
             margin-top: -10px;
             margin-bottom: 20px;
             font-family: 'Roboto Mono', monospace;
-            text-transform: none; /* Lower case allowed here for readability */
+            text-transform: none;
         }
 
         .main-container {
@@ -82,12 +81,11 @@
         .panel {
             background-color: var(--bg-cockpit);
             border: 2px solid var(--border-hard);
-            border-radius: 0; /* Hard edges, no rounding */
+            border-radius: 0;
             padding: 15px;
             position: relative;
         }
 
-        /* Angled corner visual effect on panels */
         .panel::before {
             content: '';
             position: absolute;
@@ -118,7 +116,7 @@
         }
 
         .map-zone:hover, .map-zone.active {
-            fill-opacity: 0.9; /* High contrast select */
+            fill-opacity: 0.9;
             stroke-width: 4;
             stroke: #FFFFFF;
         }
@@ -168,7 +166,6 @@
             color: #000000;
         }
 
-        /* Detail Card Grid: High Data Density */
         .spec-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -180,10 +177,9 @@
             background-color: rgba(0, 0, 0, 0.5);
             padding: 10px;
             border: 1px solid var(--border-hard);
-            border-left: 4px solid var(--border-hard); /* Default neutral */
+            border-left: 4px solid var(--border-hard);
         }
 
-        /* Specific border colors per data type */
         .spec-box.light-level { border-left-color: #FFFFFF; }
         .spec-box.optic { border-left-color: var(--velocity-yellow); }
         .spec-box.control { border-left-color: var(--caution-red); }
@@ -203,9 +199,8 @@
             color: var(--text-main);
         }
 
-        /* Calculator Panel - High Performance Section */
         .calculator-panel {
-            border: 2px solid var(--green-flag); /* "GO" color */
+            border: 2px solid var(--green-flag);
             padding: 15px;
             margin-top: 15px;
             background-color: #000000;
@@ -236,24 +231,23 @@
             font-family: 'Roboto Mono', monospace;
         }
 
-        .form-group input, .form-group textarea {
+        .form-group input, .form-group textarea, .form-group select {
             width: 100%;
             padding: 8px;
             background-color: #111111;
             border: 1px solid var(--border-hard);
             color: var(--text-main);
-            font-family: 'Roboto Mono', monospace; /* Monospace input data */
-            font-size: 1rem;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9rem;
             box-sizing: border-box;
             border-radius: 0;
         }
 
-        .form-group input:focus, .form-group textarea:focus {
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             outline: none;
             border-color: var(--velocity-yellow);
         }
 
-        /* ROI Digital Display Look */
         .roi-summary {
             margin-top: 15px;
             padding: 10px;
@@ -275,15 +269,65 @@
             font-size: 1.6rem;
             font-weight: bold;
             color: var(--green-flag);
-            font-family: 'Roboto Mono', monospace; /* Digital meter style */
+            font-family: 'Roboto Mono', monospace;
         }
 
-        /* Large Notes Area */
-        .notes-area {
+        /* Interactive Field Notes Styling */
+        .notes-panel {
             margin-top: 15px;
+            border: 1px solid var(--border-hard);
+            padding: 12px;
+            background-color: #000000;
         }
 
-        /* High-Speed Call to Action Button */
+        .chip-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .chip-btn {
+            background-color: #111111;
+            color: var(--velocity-yellow);
+            border: 1px solid var(--velocity-yellow);
+            padding: 6px 10px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.1s ease;
+        }
+
+        .chip-btn:hover {
+            background-color: var(--velocity-yellow);
+            color: #000000;
+            font-weight: bold;
+        }
+
+        .btn-clear {
+            background-color: transparent;
+            color: var(--caution-red);
+            border: 1px solid var(--caution-red);
+            padding: 4px 8px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        .btn-clear:hover {
+            background-color: var(--caution-red);
+            color: #FFFFFF;
+        }
+
+        .notes-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
         .btn-action {
             background-color: var(--velocity-yellow);
             color: #000000;
@@ -296,11 +340,9 @@
             width: 100%;
             text-transform: uppercase;
             letter-spacing: 2px;
-            position: relative;
             transition: background-color 0.1s ease;
         }
 
-        /* "Caution Flag" pattern overlay on button hover */
         .btn-action:hover {
             background-color: #FFFFFF;
             background-image: linear-gradient(45deg, #000 25%, transparent 25%, transparent 50%, #000 50%, #000 75%, transparent 75%, transparent);
@@ -332,25 +374,19 @@
 <div class="main-container">
     <div class="panel">
         <div class="site-map-container">
-            <!-- Interative Site Blueprint -->
             <svg class="site-map-svg" viewBox="0 0 400 260">
-                <!-- Main Parking (Velocity Yellow) -->
                 <rect id="svg-parking" class="map-zone" x="20" y="20" width="220" height="110" fill="#FFD700" stroke="#FFD700" onclick="selectZoneById('parking')"/>
                 <text x="130" y="75" fill="#FFFFFF" font-size="14" font-weight="700" text-anchor="middle" pointer-events="none">PARKING</text>
                 
-                <!-- Perimeter Line (Caution Red) -->
                 <rect id="svg-perimeter-parking" class="map-zone" x="250" y="20" width="130" height="110" fill="#FF0000" stroke="#FF0000" onclick="selectZoneById('perimeter-parking')"/>
                 <text x="315" y="75" fill="#FFFFFF" font-size="12" font-weight="700" text-anchor="middle" pointer-events="none">PERIMETER</text>
 
-                <!-- Breezeways (Pure White) -->
                 <rect id="svg-breezeways" class="map-zone" x="20" y="140" width="160" height="100" fill="#FFFFFF" stroke="#FFFFFF" onclick="selectZoneById('breezeways')"/>
                 <text x="100" y="195" fill="#FFFFFF" font-size="14" font-weight="700" text-anchor="middle" pointer-events="none">UNITS / WALK</text>
 
-                <!-- Stairwells (High Intensity Blue) -->
                 <rect id="svg-stairwells" class="map-zone" x="190" y="140" width="80" height="100" fill="#0000FF" stroke="#0000FF" onclick="selectZoneById('stairwells')"/>
                 <text x="230" y="195" fill="#FFFFFF" font-size="12" font-weight="700" text-anchor="middle" pointer-events="none">STAIRS</text>
 
-                <!-- Building Wall (Green Flag) -->
                 <rect id="svg-perimeter-bldg" class="map-zone" x="280" y="140" width="100" height="100" fill="#00FF00" stroke="#00FF00" onclick="selectZoneById('perimeter-bldg')"/>
                 <text x="330" y="195" fill="#FFFFFF" font-size="12" font-weight="700" text-anchor="middle" pointer-events="none">WALL PACKS</text>
             </svg>
@@ -359,7 +395,6 @@
         <ul class="zone-list" id="zoneList"></ul>
     </div>
 
-    <!-- Active Zone Telemetry Display -->
     <div class="panel" id="detailCard">
         <!-- Content populated via JS -->
     </div>
@@ -367,11 +402,71 @@
 
 <script>
     const zoneData = [
-        { id: "parking", title: "MAIN PARKING LOT", fc: "1.0 - 2.0 FC AVG", optics: "TYPE III / TYPE V", controls: "BI-LEVEL DIM (50%) + PC", fixtures: "POLE-MOUNT AREA LIGHTS", dlcTier: "DLC PREMIUM V5.1", baseWattage: 250, ledWattage: 75, estRebatePerFixture: 75 },
-        { id: "perimeter-parking", title: "PERIMETER LINE", fc: "1.0 - 1.5 FC AVG", optics: "TYPE IV FWD THROW", controls: "BI-LEVEL DIM + PC", fixtures: "FULL-CUTOFF W/ SHIELDS", dlcTier: "DLC PREMIUM V5.1", baseWattage: 250, ledWattage: 80, estRebatePerFixture: 75 },
-        { id: "breezeways", title: "BREEZEWAYS / WALK", fc: "3.0 - 5.0 FC AVG", optics: "WIDE SURFACE", controls: "BI-LEVEL MOTION + PC", fixtures: "CEILING PUCK / CANOPY", dlcTier: "DLC STANDARD V5.1", baseWattage: 70, ledWattage: 20, estRebatePerFixture: 25 },
-        { id: "stairwells", title: "STAIRWELL EGRESS", fc: "5.0 - 10.0 FC MIN", optics: "WIDE SYMMETRIC", controls: "24/7 + EM BACKUP", fixtures: "VANDAL-RESISTANT WALL", dlcTier: "DLC STANDARD V5.1", baseWattage: 100, ledWattage: 30, estRebatePerFixture: 35 },
-        { id: "perimeter-bldg", title: "BUILDING WALL PACKS", fc: "1.5 - 3.0 FC AVG", optics: "TYPE III / FWD THROW", controls: "INTEGRATED MOTION (30%)", fixtures: "FULL-CUTOFF ARCH LED", dlcTier: "DLC PREMIUM V5.1", baseWattage: 175, ledWattage: 45, estRebatePerFixture: 50 }
+        { 
+            id: "parking", 
+            title: "MAIN PARKING LOT", 
+            fc: "1.0 - 2.0 FC AVG", 
+            optics: "TYPE III / TYPE V", 
+            controls: "BI-LEVEL DIM (50%) + PC", 
+            fixtures: "POLE-MOUNT AREA LIGHTS", 
+            dlcTier: "DLC PREMIUM V5.1", 
+            baseWattage: 250, 
+            ledWattage: 75, 
+            estRebatePerFixture: 75,
+            quickChips: ["20ft Pole", "25ft Pole", "2-3/8 Tenon", "4in Tenon", "Square Pole", "Round Pole", "Rust Present", "Needs Bullhorn"]
+        },
+        { 
+            id: "perimeter-parking", 
+            title: "PERIMETER LINE", 
+            fc: "1.0 - 1.5 FC AVG", 
+            optics: "TYPE IV FWD THROW", 
+            controls: "BI-LEVEL DIM + PC", 
+            fixtures: "FULL-CUTOFF W/ SHIELDS", 
+            dlcTier: "DLC PREMIUM V5.1", 
+            baseWattage: 250, 
+            ledWattage: 80, 
+            estRebatePerFixture: 75,
+            quickChips: ["House-Side Shield Req", "Property Line Adjacent", "20ft Pole", "Zero Spill Mandate", "Single Arm Mount"]
+        },
+        { 
+            id: "breezeways", 
+            title: "BREEZEWAYS / WALK", 
+            fc: "3.0 - 5.0 FC AVG", 
+            optics: "WIDE SURFACE", 
+            controls: "BI-LEVEL MOTION + PC", 
+            fixtures: "CEILING PUCK / CANOPY", 
+            dlcTier: "DLC STANDARD V5.1", 
+            baseWattage: 70, 
+            ledWattage: 20, 
+            estRebatePerFixture: 25,
+            quickChips: ["Concrete Ceiling", "Soffit Mount", "J-Box Existing", "Low Clearance", "8ft Height", "10ft Height"]
+        },
+        { 
+            id: "stairwells", 
+            title: "STAIRWELL EGRESS", 
+            fc: "5.0 - 10.0 FC MIN", 
+            optics: "WIDE SYMMETRIC", 
+            controls: "24/7 + EM BACKUP", 
+            fixtures: "VANDAL-RESISTANT WALL", 
+            dlcTier: "DLC STANDARD V5.1", 
+            baseWattage: 100, 
+            ledWattage: 30, 
+            estRebatePerFixture: 35,
+            quickChips: ["EM Battery Backup Req", "Vandal Lens Req", "Steel Frame", "Concrete Wall", "Continuous Operation"]
+        },
+        { 
+            id: "perimeter-bldg", 
+            title: "BUILDING WALL PACKS", 
+            fc: "1.5 - 3.0 FC AVG", 
+            optics: "TYPE III / FWD THROW", 
+            controls: "INTEGRATED MOTION (30%)", 
+            fixtures: "FULL-CUTOFF ARCH LED", 
+            dlcTier: "DLC PREMIUM V5.1", 
+            baseWattage: 175, 
+            ledWattage: 45, 
+            estRebatePerFixture: 50,
+            quickChips: ["Brick Mount", "Stucco / EIFS Mount", "Wood Siding", "Covers Footprint", "12ft Mounting Ht", "15ft Mounting Ht"]
+        }
     ];
 
     let currentZone = zoneData[0];
@@ -408,7 +503,6 @@
             li.onclick = () => selectZoneById(zone.id);
             listEl.appendChild(li);
 
-            // Update SVG map visual states
             const svgEl = document.getElementById(`svg-${zone.id}`);
             if (svgEl) {
                 if (zone.id === currentZone.id) {
@@ -423,6 +517,11 @@
     function renderDetailCard() {
         const cardEl = document.getElementById("detailCard");
         const currentAudit = auditData[currentZone.id];
+
+        // Generate Quick Chips HTML
+        const chipsHtml = currentZone.quickChips.map(chip => 
+            `<button class="chip-btn" onclick="addChipNote('${chip}')">+ ${chip}</button>`
+        ).join('');
 
         cardEl.innerHTML = `
             <h2>TELEMETRY: ${currentZone.title}</h2>
@@ -479,9 +578,19 @@
                 </div>
             </div>
 
-            <div class="form-group notes-area">
-                <label>FIELD NOTES | POLE CONFIG | MOUNTING VERIFICATION</label>
-                <textarea id="fieldNotes" rows="3" placeholder="Enter critical site data (e.g., 20ft poles, 2-3/8 tenon, brick mount...)" onchange="saveNotes()">${currentAudit.notes}</textarea>
+            <div class="notes-panel">
+                <div class="notes-header">
+                    <label style="font-family: 'Roboto Mono', monospace; font-size: 0.75rem; color: var(--text-muted);">INTERACTIVE FIELD NOTES & SPECS</label>
+                    <button class="btn-clear" onclick="clearNotes()">CLEAR NOTES</button>
+                </div>
+                
+                <div class="chip-container">
+                    ${chipsHtml}
+                </div>
+
+                <div class="form-group">
+                    <textarea id="fieldNotes" rows="3" placeholder="Tap chips above or type custom field notes..." onchange="saveNotes()">${currentAudit.notes}</textarea>
+                </div>
             </div>
 
             <button class="btn-action" onclick="generateTransmittal()">EXPORT FACTORY SPEC PACKAGE</button>
@@ -491,19 +600,38 @@
         updateCalculations();
     }
 
+    function addChipNote(text) {
+        const textarea = document.getElementById("fieldNotes");
+        let currentText = textarea.value.trim();
+        
+        if (currentText.includes(text)) return; // Prevent duplicates
+        
+        if (currentText.length > 0) {
+            textarea.value = currentText + " | " + text;
+        } else {
+            textarea.value = text;
+        }
+        
+        saveNotes();
+    }
+
+    function clearNotes() {
+        const textarea = document.getElementById("fieldNotes");
+        textarea.value = "";
+        saveNotes();
+    }
+
     function updateCalculations() {
         const qty = parseInt(document.getElementById("inputQty").value) || 0;
         const baseW = parseFloat(document.getElementById("inputBaseW").value) || 0;
         const ledW = parseFloat(document.getElementById("inputLedW").value) || 0;
         const rebatePerUnit = parseFloat(document.getElementById("inputRebate").value) || 0;
 
-        // Store back to active state
         auditData[currentZone.id].qty = qty;
 
         const totalKwSaved = ((baseW - ledW) * qty) / 1000;
         const totalRebate = qty * rebatePerUnit;
 
-        // Update the digital meters
         document.getElementById("summaryKw").innerText = `${totalKwSaved.toFixed(1)} KW`;
         document.getElementById("summaryRebate").innerText = `$${totalRebate.toLocaleString()}`;
 
@@ -543,7 +671,6 @@
         outputEl.innerText = JSON.stringify(payload, null, 2);
     }
 
-    // Start App
     init();
 </script>
 
