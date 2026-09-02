@@ -1,3 +1,8 @@
+To update the **Telemetry Data Grid** in your application code, replace the relevant rendering block inside your JavaScript file or `index.html`.
+
+Below is the complete, single-file `index.html` updated to reflect the new Telemetry display structure and styling while maintaining all current features, quick-tap notes, interactive SVG thumbnails, and calculations.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -123,12 +128,12 @@
         .zone-item {
             padding: 10px;
             cursor: pointer;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             background-color: #000000;
             border: 1px solid var(--border-hard);
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 12px;
             transition: border-color 0.1s ease-out;
         }
 
@@ -139,6 +144,35 @@
         .zone-item.active {
             border: 2px solid var(--velocity-yellow);
             background-color: rgba(255, 215, 0, 0.1);
+        }
+
+        /* SVG Thumbnail Styling */
+        .zone-thumb {
+            width: 44px;
+            height: 44px;
+            background-color: #111111;
+            border: 1px solid var(--border-hard);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .zone-item.active .zone-thumb {
+            border-color: var(--velocity-yellow);
+            background-color: #000000;
+        }
+
+        .zone-thumb svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .zone-info {
+            flex-grow: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .zone-title {
@@ -159,6 +193,7 @@
             color: #000000;
         }
 
+        /* Updated Telemetry Box Grid */
         .spec-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -167,8 +202,8 @@
         }
 
         .spec-box {
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
+            background-color: #000000;
+            padding: 12px;
             border: 1px solid var(--border-hard);
             border-left: 4px solid var(--border-hard);
         }
@@ -180,16 +215,17 @@
 
         .spec-box label {
             display: block;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
-            margin-bottom: 2px;
+            margin-bottom: 4px;
             font-family: 'Roboto Mono', monospace;
         }
 
         .spec-box span {
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--text-main);
+            display: block;
         }
 
         .calculator-panel {
@@ -214,6 +250,7 @@
 
         @media (max-width: 600px) {
             .calc-grid { grid-template-columns: repeat(2, 1fr); }
+            .spec-grid { grid-template-columns: 1fr; }
         }
 
         .form-group label {
@@ -403,7 +440,8 @@
             baseWattage: 250, 
             ledWattage: 75, 
             estRebatePerFixture: 75,
-            quickChips: ["20ft Pole", "25ft Pole", "2-3/8 Tenon", "4in Tenon", "Square Pole", "Round Pole", "Rust Present", "Needs Bullhorn"]
+            quickChips: ["20ft Pole", "25ft Pole", "2-3/8 Tenon", "4in Tenon", "Square Pole", "Round Pole", "Rust Present", "Needs Bullhorn"],
+            thumbSvg: `<svg viewBox="0 0 40 40"><line x1="12" y1="36" x2="12" y2="12" stroke="#FFD700" stroke-width="2.5"/><path d="M 12 12 Q 12 6 22 6 L 30 6" fill="none" stroke="#FFD700" stroke-width="2.5"/><rect x="26" y="6" width="10" height="4" fill="#FFD700"/><polygon points="26,10 36,10 38,24 24,24" fill="#FFD700" opacity="0.25"/></svg>`
         },
         { 
             id: "perimeter-parking", 
@@ -416,7 +454,8 @@
             baseWattage: 250, 
             ledWattage: 80, 
             estRebatePerFixture: 75,
-            quickChips: ["House-Side Shield Req", "Property Line Adjacent", "20ft Pole", "Zero Spill Mandate", "Single Arm Mount"]
+            quickChips: ["House-Side Shield Req", "Property Line Adjacent", "20ft Pole", "Zero Spill Mandate", "Single Arm Mount"],
+            thumbSvg: `<svg viewBox="0 0 40 40"><line x1="20" y1="36" x2="20" y2="12" stroke="#FF0000" stroke-width="2.5"/><line x1="20" y1="12" x2="30" y2="12" stroke="#FF0000" stroke-width="2.5"/><rect x="28" y="9" width="8" height="6" fill="#FF0000"/><line x1="28" y1="9" x2="28" y2="22" stroke="#FF0000" stroke-width="2"/><polygon points="28,15 36,15 38,28 28,28" fill="#FF0000" opacity="0.25"/><line x1="6" y1="6" x2="6" y2="36" stroke="#555555" stroke-width="1.5" stroke-dasharray="2,2"/></svg>`
         },
         { 
             id: "breezeways", 
@@ -429,7 +468,8 @@
             baseWattage: 70, 
             ledWattage: 20, 
             estRebatePerFixture: 25,
-            quickChips: ["Concrete Ceiling", "Soffit Mount", "J-Box Existing", "Low Clearance", "8ft Height", "10ft Height"]
+            quickChips: ["Concrete Ceiling", "Soffit Mount", "J-Box Existing", "Low Clearance", "8ft Height", "10ft Height"],
+            thumbSvg: `<svg viewBox="0 0 40 40"><line x1="4" y1="8" x2="36" y2="8" stroke="#FFFFFF" stroke-width="3"/><rect x="12" y="8" width="16" height="5" fill="#FFFFFF"/><polygon points="12,13 28,13 34,30 6,30" fill="#FFFFFF" opacity="0.25"/></svg>`
         },
         { 
             id: "stairwells", 
@@ -442,7 +482,8 @@
             baseWattage: 100, 
             ledWattage: 30, 
             estRebatePerFixture: 35,
-            quickChips: ["EM Battery Backup Req", "Vandal Lens Req", "Steel Frame", "Concrete Wall", "Continuous Operation"]
+            quickChips: ["EM Battery Backup Req", "Vandal Lens Req", "Steel Frame", "Concrete Wall", "Continuous Operation"],
+            thumbSvg: `<svg viewBox="0 0 40 40"><path d="M 6 34 L 16 34 L 16 24 L 26 24 L 26 14 L 36 14" fill="none" stroke="#555555" stroke-width="2"/><rect x="28" y="6" width="6" height="6" fill="#0000FF" stroke="#FFFFFF" stroke-width="1"/><polygon points="28,12 34,12 38,22 24,22" fill="#0000FF" opacity="0.4"/></svg>`
         },
         { 
             id: "perimeter-bldg", 
@@ -455,7 +496,8 @@
             baseWattage: 175, 
             ledWattage: 45, 
             estRebatePerFixture: 50,
-            quickChips: ["Brick Mount", "Stucco / EIFS Mount", "Wood Siding", "Covers Footprint", "12ft Mounting Ht", "15ft Mounting Ht"]
+            quickChips: ["Brick Mount", "Stucco / EIFS Mount", "Wood Siding", "Covers Footprint", "12ft Mounting Ht", "15ft Mounting Ht"],
+            thumbSvg: `<svg viewBox="0 0 40 40"><line x1="8" y1="4" x2="8" y2="36" stroke="#00FF00" stroke-width="3"/><rect x="8" y="12" width="10" height="10" fill="#00FF00"/><polygon points="18,12 18,22 36,32 18,32" fill="#00FF00" opacity="0.3"/></svg>`
         }
     ];
 
@@ -487,8 +529,11 @@
             li.className = `zone-item ${zone.id === currentZone.id ? 'active' : ''}`;
             const qty = auditData[zone.id].qty;
             li.innerHTML = `
-                <span class="zone-title">${zone.title}</span>
-                <span class="badge">${qty > 0 ? qty + ' UNITS' : 'PENDING'}</span>
+                <div class="zone-thumb">${zone.thumbSvg}</div>
+                <div class="zone-info">
+                    <span class="zone-title">${zone.title}</span>
+                    <span class="badge">${qty > 0 ? qty + ' UNITS' : 'PENDING'}</span>
+                </div>
             `;
             li.onclick = () => selectZoneById(zone.id);
             listEl.appendChild(li);
@@ -665,3 +710,5 @@
 
 </body>
 </html>
+
+```
