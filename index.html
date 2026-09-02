@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Family Exterior Lighting & Rebate Audit Tool</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --accent-green: #4ade80;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 24px;
+        }
+
+        header {
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+        }
+
+        h1 {
+            margin: 0 0 6px 0;
+            font-size: 1.6rem;
+            color: var(--accent-color);
+        }
+
+        p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .main-container {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .site-map-container {
+            margin-bottom: 20px;
+        }
+
+        .site-map-svg {
+            width: 100%;
+            height: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: #0b1329;
+        }
+
+        .map-zone {
+            cursor: pointer;
+            fill-opacity: 0.25;
+            stroke-width: 2;
+            transition: all 0.2s ease;
+        }
+
+        .map-zone:hover, .map-zone.active {
+            fill-opacity: 0.65;
+            stroke-width: 3;
+        }
+
+        .zone-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .zone-item {
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 8px;
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .zone-item:hover {
+            border-color: var(--accent-color);
+            background-color: rgba(56, 189, 248, 0.05);
+        }
+
+        .zone-item.active {
+            border-color: var(--accent-color);
+            background-color: rgba(56, 189, 248, 0.15);
+            font-weight: 600;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background-color: var(--border-color);
+            color: var(--text-main);
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .spec-box {
+            background-color: rgba(0, 0, 0, 0.25);
+            padding: 14px;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .spec-box.rebate {
+            border-left-color: var(--accent-green);
+        }
+
+        .spec-box label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .spec-box span {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .calculator-panel {
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+
+        .calculator-panel h3 {
+            margin-top: 0;
+            font-size: 1rem;
+            color: var(--accent-green);
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        .form-group {
+            margin-top: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            background-color: #0f172a;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-main);
+            box-sizing: border-box;
+        }
+
+        .roi-summary {
+            margin-top: 16px;
+            padding: 12px;
+            background-color: rgba(74, 222, 128, 0.1);
+            border: 1px solid var(--accent-green);
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .roi-summary div label {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .roi-summary div span {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--accent-green);
+        }
+
+        .btn-action {
+            background-color: var(--accent-color);
+            color: #0f172a;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .btn-action:hover {
+            opacity: 0.9;
+        }
+
+        .output-box {
+            margin-top: 20px;
+            background-color: #080d1a;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            white-space: pre-wrap;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Multi-Family Lighting Layout & Rebate Audit Tool</h1>
+    <p>Select site segments via map or list to configure fixture specs, estimate energy reduction, and generate factory transmittals.</p>
+</header>
+
+<div class="main-container">
+    <div class="panel">
+        <div class="site-map-container">
+            <svg class="site-map-svg" viewBox="0 0 400 260">
+                <rect id="svg-parking" class="map-zone" x="20" y="20" width="220" height="110" fill="#38bdf8" stroke="#38bdf8" onclick="selectZoneById('parking')"/>
+                <text x="130" y="75" fill="#ffffff" font-size="12" text-anchor="middle" pointer-events="none">Main Parking Lot</text>
+                
+                <rect id="svg-perimeter-parking" class="map-zone" x="250" y="20" width="130" height="110" fill="#f59e0b" stroke="#f59e0b" onclick="selectZoneById('perimeter-parking')"/>
+                <text x="315" y="75" fill="#ffffff" font-size="11" text-anchor="middle" pointer-events="none">Perimeter Line</text>
+
+                <rect id="svg-breezeways" class="map-zone" x="20" y="140" width="160" height="100" fill="#a855f7" stroke="#a855f7" onclick="selectZoneById('breezeways')"/>
+                <text x="100" y="195" fill="#ffffff" font-size="12" text-anchor="middle" pointer-events="none">Breezeways / Units</text>
+
+                <rect id="svg-stairwells" class="map-zone" x="190" y="140" width="80" height="100" fill="#ef4444" stroke="#ef4444" onclick="selectZoneById('stairwells')"/>
+                <text x="230" y="195" fill="#ffffff" font-size="11" text-anchor="middle" pointer-events="none">Stairwells</text>
+
+                <rect id="svg-perimeter-bldg" class="map-zone" x="280" y="140" width="100" height="100" fill="#10b981" stroke="#10b981" onclick="selectZoneById('perimeter-bldg')"/>
+                <text x="330" y="195" fill="#ffffff" font-size="11" text-anchor="middle" pointer-events="none">Building Wall</text>
+            </svg>
+        </div>
+
+        <ul class="zone-list" id="zoneList"></ul>
+    </div>
+
+    <div class="panel" id="detailCard">
+        </div>
+</div>
+
+<script>
+    const zoneData = [
+        {
+            id: "parking",
+            title: "Parking Bays & Access Lanes",
+            fc: "1.0 - 2.0 fc avg",
+            optics: "Type III / Type V",
+            controls: "Bi-level dimming (50%) + Photocell",
+            fixtures: "LED Area/Shoebox Lights (Pole-Mounted)",
+            dlcTier: "DLC Premium V5.1",
+            baseWattage: 250,
+            ledWattage: 75,
+            estRebatePerFixture: 75
+        },
+        {
+            id: "perimeter-parking",
+            title: "Perimeter Parking",
+            fc: "1.0 - 1.5 fc avg",
+            optics: "Type IV (Forward Throw)",
+            controls: "Bi-level dimming + Photocell",
+            fixtures: "Full-Cutoff Area Lights w/ Backlight Shield",
+            dlcTier: "DLC Premium V5.1",
+            baseWattage: 250,
+            ledWattage: 80,
+            estRebatePerFixture: 75
+        },
+        {
+            id: "breezeways",
+            title: "Breezeways & Corridors",
+            fc: "3.0 - 5.0 fc avg",
+            optics: "Wide Surface Mount",
+            controls: "Bi-Level Motion Sensing + Photocell",
+            fixtures: "Flush-Mount Ceiling Puck / Square Canopies",
+            dlcTier: "DLC Standard V5.1",
+            baseWattage: 70,
+            ledWattage: 20,
+            estRebatePerFixture: 25
+        },
+        {
+            id: "stairwells",
+            title: "Stairwells & Emergency Egress",
+            fc: "5.0 - 10.0 fc min",
+            optics: "Wide Symmetric",
+            controls: "Continuous 24/7 + EM Battery Backup",
+            fixtures: "Vandal-Resistant Surface Wall Packs",
+            dlcTier: "DLC Standard V5.1",
+            baseWattage: 100,
+            ledWattage: 30,
+            estRebatePerFixture: 35
+        },
+        {
+            id: "perimeter-bldg",
+            title: "Building Perimeter Wall Packs",
+            fc: "1.5 - 3.0 fc avg",
+            optics: "Type III / Forward Throw",
+            controls: "Integrated PIR Motion Sensor (dims to 30%)",
+            fixtures: "Full-Cutoff Architectural LED Wall Packs",
+            dlcTier: "DLC Premium V5.1",
+            baseWattage: 175,
+            ledWattage: 45,
+            estRebatePerFixture: 50
+        }
+    ];
+
+    let currentZone = zoneData[0];
+    let auditData = {};
+
+    function init() {
+        zoneData.forEach(z => {
+            auditData[z.id] = { qty: 0, notes: "", photoCount: 0 };
+        });
+        renderZoneList();
+        renderDetailCard();
+    }
+
+    function selectZoneById(id) {
+        const found = zoneData.find(z => z.id === id);
+        if (found) {
+            currentZone = found;
+            renderZoneList();
+            renderDetailCard();
+        }
+    }
+
+    function renderZoneList() {
+        const listEl = document.getElementById("zoneList");
+        listEl.innerHTML = "";
+        zoneData.forEach(zone => {
+            const li = document.createElement("li");
+            li.className = `zone-item ${zone.id === currentZone.id ? 'active' : ''}`;
+            const qty = auditData[zone.id].qty;
+            li.innerHTML = `
+                <span>${zone.title}</span>
+                <span class="badge">${qty > 0 ? qty + ' units' : 'Pending'}</span>
+            `;
+            li.onclick = () => selectZoneById(zone.id);
+            listEl.appendChild(li);
+
+            // Update SVG highlighted states
+            const svgEl = document.getElementById(`svg-${zone.id}`);
+            if (svgEl) {
+                if (zone.id === currentZone.id) {
+                    svgEl.classList.add('active');
+                } else {
+                    svgEl.classList.remove('active');
+                }
+            }
+        });
+    }
+
+    function renderDetailCard() {
+        const cardEl = document.getElementById("detailCard");
+        const currentAudit = auditData[currentZone.id];
+
+        cardEl.innerHTML = `
+            <h2>${currentZone.title}</h2>
+            <div class="spec-grid">
+                <div class="spec-box">
+                    <label>Target Foot-Candles</label>
+                    <span>${currentZone.fc}</span>
+                </div>
+                <div class="spec-box">
+                    <label>Optic Distribution</label>
+                    <span>${currentZone.optics}</span>
+                </div>
+                <div class="spec-box">
+                    <label>Mandatory Controls</label>
+                    <span>${currentZone.controls}</span>
+                </div>
+                <div class="spec-box rebate">
+                    <label>Rebate Eligibility</label>
+                    <span>${currentZone.dlcTier}</span>
+                </div>
+            </div>
+
+            <div class="calculator-panel">
+                <h3>Energy Reduction & Utility Rebate Calculator</h3>
+                <div class="calc-grid">
+                    <div class="form-group">
+                        <label>Fixture Qty</label>
+                        <input type="number" id="inputQty" value="${currentAudit.qty}" min="0" oninput="updateCalculations()"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Baseline Wattage</label>
+                        <input type="number" id="inputBaseW" value="${currentZone.baseWattage}" oninput="updateCalculations()"/>
+                    </div>
+                    <div class="form-group">
+                        <label>LED Wattage</label>
+                        <input type="number" id="inputLedW" value="${currentZone.ledWattage}" oninput="updateCalculations()"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Est. Rebate/Unit ($)</label>
+                        <input type="number" id="inputRebate" value="${currentZone.estRebatePerFixture}" oninput="updateCalculations()"/>
+                    </div>
+                </div>
+
+                <div class="roi-summary">
+                    <div>
+                        <label>Total Power Reduction</label>
+                        <span id="summaryKw">0.0 kW</span>
+                    </div>
+                    <div>
+                        <label>Est. Utility Incentive</label>
+                        <span id="summaryRebate">$0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Field Notes & Mounting Verification</label>
+                <textarea id="fieldNotes" rows="3" placeholder="Document pole heights, tenon dimensions, existing damage, or mounting surface..." onchange="saveNotes()">${currentAudit.notes}</textarea>
+            </div>
+
+            <button class="btn-action" onclick="generateTransmittal()">Export Factory Spec Transmittal Package</button>
+            <div id="outputBox" class="output-box"></div>
+        `;
+
+        updateCalculations();
+    }
+
+    function updateCalculations() {
+        const qty = parseInt(document.getElementById("inputQty").value) || 0;
+        const baseW = parseFloat(document.getElementById("inputBaseW").value) || 0;
+        const ledW = parseFloat(document.getElementById("inputLedW").value) || 0;
+        const rebatePerUnit = parseFloat(document.getElementById("inputRebate").value) || 0;
+
+        // Store back to state
+        auditData[currentZone.id].qty = qty;
+
+        const totalKwSaved = ((baseW - ledW) * qty) / 1000;
+        const totalRebate = qty * rebatePerUnit;
+
+        document.getElementById("summaryKw").innerText = `${totalKwSaved.toFixed(2)} kW`;
+        document.getElementById("summaryRebate").innerText = `$${totalRebate.toLocaleString()}`;
+
+        renderZoneList();
+    }
+
+    function saveNotes() {
+        const notes = document.getElementById("fieldNotes").value;
+        auditData[currentZone.id].notes = notes;
+    }
+
+    function generateTransmittal() {
+        saveNotes();
+        const payload = {
+            project: "Multi-Family Exterior Lighting Specification Package",
+            generatedAt: new Date().toISOString(),
+            zones: zoneData.map(z => ({
+                segment: z.title,
+                targetFC: z.fc,
+                distribution: z.optics,
+                mandatoryControls: z.controls,
+                dlcRequirement: z.dlcTier,
+                quantity: auditData[z.id].qty,
+                fieldNotes: auditData[z.id].notes
+            })).filter(z => z.quantity > 0)
+        };
+
+        const outputEl = document.getElementById("outputBox");
+        outputEl.style.display = "block";
+        outputEl.innerText = JSON.stringify(payload, null, 2);
+    }
+
+    // Initialize application
+    init();
+</script>
+
+</body>
+</html>
